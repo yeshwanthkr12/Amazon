@@ -1,11 +1,7 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'maven-3'
-    }
-
-    stages {   
+    stages {
         stage('clone project') {
             steps {
                 git branch: 'master', url: 'https://github.com/yeshwanthkr12/Amazon'
@@ -14,25 +10,33 @@ pipeline {
 
         stage('clean') {
             steps {
-                sh 'mvn clean'
+                dir('Amazon') {
+                    sh 'mvn clean'
+                }
             }
         }
 
         stage('compile') {
             steps {
-                sh 'mvn compile'
+                dir('Amazon') {
+                    sh 'mvn compile'
+                }
             }
         }
 
         stage('test') {
             steps {
-                sh 'mvn test'
+                dir('Amazon') {
+                    sh 'mvn test'
+                }
             }
         }
 
         stage('build') {
             steps {
-                sh 'mvn clean install'
+                dir('Amazon') {
+                    sh 'mvn clean install'
+                }
             }
         }
     }
